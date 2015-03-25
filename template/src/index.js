@@ -1,3 +1,3 @@
-var config = require('./config');
+var Main = require('./Main');
 
-//TODO: main class
+module.exports = new Main();
