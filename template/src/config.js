@@ -27,7 +27,7 @@ module.exports = {
         canvas: null,
 
         //Color used like a renderer's background, (0x000000 by default)
-        backgroundColor: null,
+        backgroundColor: 0x000000,
 
         //If the render view is transparent, default false
         transparentBackground: false,
@@ -45,13 +45,16 @@ module.exports = {
         usePersitantData: false,
 
         //Screen scale behavior when the canvas size is different to the window size, default GAME_SCALE_TYPE.NONE
-        gameScaleType: 0, //TODO PQ.GAME_SCALE_TYPE.NONE,
+        gameScaleType: PQ.GAME_SCALE_TYPE.NONE,
 
         //If the performance is poor, the time between frames never will go more slowly than this
         minFrameLimit: 30,
 
         //Pause the game when it lost the focus, (example: when you change the browser's tab) default true
-        stopAtVisibiltyChange: true
+        stopAtVisibiltyChange: true,
+
+        //This sets if the CanvasRenderer will clear the canvas or not before the new render pass.
+        clearBeforeRender: true
 
     },
 
