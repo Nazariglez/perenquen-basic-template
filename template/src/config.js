@@ -20,7 +20,7 @@ module.exports = {
         //Renderer height
         height: 600,
 
-        //The resolution of the renderer, uses to scale in retina devices
+        //The resolution of the renderer, used to scale in retina devices
         resolution: 1,
 
         //The canvas to use as a view, (by default perenquen creates one)
