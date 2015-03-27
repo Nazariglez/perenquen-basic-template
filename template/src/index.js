@@ -1,5 +1,7 @@
-var plugin = require('./Plugin');
-plugin.activate([]);
+var plugin = require('./Plugin'),
+    config = require('./config'),
+    Main = require('./game/Main');
 
-var Main = require('./game/Main');
+plugin.enable(config.plugins);
+
 module.exports = new Main();

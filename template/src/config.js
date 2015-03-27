@@ -77,6 +77,10 @@ module.exports = {
         activeGamepad: false,
 
         activeAccelerometer: false
-    }
+    },
+
+    plugins : [
+        //Here your plugins name
+    ]
 
 };
