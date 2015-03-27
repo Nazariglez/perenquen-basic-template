@@ -1,4 +1,4 @@
-var config = require('./config');
+var config = require('../config');
 
 module.exports = PQ.Class.extend({
     _init: function(){
