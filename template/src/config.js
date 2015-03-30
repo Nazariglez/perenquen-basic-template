@@ -11,6 +11,12 @@ module.exports = {
     //Log out the perenquen's name, version, and web
     sayHello: true,
 
+    //Speed and rotation speed use delta time
+    useDeltaAnimation: true,
+
+    //Auto sort children when they are added to his parent, (if it's false, you can sort manually with container.sortChildrenById())
+    useSortChildrenByDepth: true,
+
     //Game options
     game : {
 
@@ -74,13 +80,13 @@ module.exports = {
 
         activeKeyboard: false,
 
-        activeGamepad: false,
-
         activeAccelerometer: false
     },
 
     plugins : [
         //Here your plugins name
+        //"locale",
+        //"gamepad"
     ]
 
 };
