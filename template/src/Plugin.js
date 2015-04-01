@@ -1,7 +1,7 @@
 var path = "./plugins/";
 
 function Plugin(){
-    this.activate = function(plugins){
+    this.enable = function(plugins){
         if(typeof plugins === "string")plugins = [plugins];
         var len = plugins.length;
         for(var i = 0; i < len; i++){
@@ -9,7 +9,7 @@ function Plugin(){
             require(url);
         }
 
-        PQ.plugin.activate(plugins);
+        PQ.plugin.enable(plugins);
     };
 }
 
