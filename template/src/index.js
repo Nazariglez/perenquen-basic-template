@@ -1,3 +1,5 @@
+window.PQ = require('perenquenjs');
+
 var config = require('./config'),
     plugin = require('./Plugin'),
     Main = require('./game/Main');
