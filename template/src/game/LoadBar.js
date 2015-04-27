@@ -11,6 +11,9 @@ module.exports = PQ.Class.extend({
         this.bar = new PQ.Graphics();
         this.loader = new PQ.AssetLoader();
 
+        this.logoTween = null;
+        this.barTween = null;
+
         this.ready = false;
     },
 
@@ -33,7 +36,7 @@ module.exports = PQ.Class.extend({
 
 
         //Simple animation
-        var logoTween = logo.tween().to({
+        this.logoTween = logo.tween().to({
             y : logo.y+5
         }).setEasing(PQ.Easing.outSine())
             .setLoop()
@@ -46,16 +49,21 @@ module.exports = PQ.Class.extend({
             .setPosition(this.game.scene.width/2 - this.width/2, this.game.scene.height/2 + 50)
             .addTo(this.game.scene);
 
-        this.bar._totalProgress = 21; //Min roundRect = radius*2 +1
+        this.bar._totalProgress = 1;
+
+        var maxProgress = 85;
+
+        var nothingToLoad = !(!!Object.keys(this.loader.resources).length);
+        if(nothingToLoad){
+            maxProgress = 100;
+        }
 
         //Add progress animation (linear)
-        var barTween = this.bar.tween().to({
-            _totalProgress: 85
+        this.barTween = this.bar.tween().to({
+            _totalProgress: maxProgress
         }).setTime(this.minTime)
+            //.setEasing(PQ.Easing.outSine())
             .start();
-
-        //TODO: Load effect when don't have nothing to load
-        var nothingToLoad = !(!!Object.keys(this.loader.resources).length);
 
         //Fake load bar effect
         var scope = this;
@@ -63,24 +71,34 @@ module.exports = PQ.Class.extend({
             if(scope.ready)return;
 
             var loadProgress = scope.loader.progress,
-                tweenEnded = barTween.isEnded,
+                tweenEnded = scope.barTween.isEnded,
                 progress = (scope.width * this._totalProgress / 100);
 
             if(progress < 21){
-                progress = 21;
+                progress = 21;  //Min roundRect = radius*2 +1
             }else if(tweenEnded){
-                if(loadProgress === 100 && this._totalProgress !== loadProgress){
-                    barTween.reset()
-                        .from({
-                            _totalProgress : this._totalProgress
-                        })
-                        .to({
-                            _totalProgress : 100
-                        }).setTime(500)
-                        .start();
-                }else if(loadProgress === 100 && this._totalProgress === 100){
+                if(nothingToLoad){
+
                     scope.ready = true;
                     scope._complete();
+
+                }else {
+
+                    if (loadProgress === 100 && this._totalProgress !== loadProgress) {
+                        scope.barTween.reset()
+                            .from({
+                                _totalProgress: this._totalProgress
+                            })
+                            .to({
+                                _totalProgress: 100
+                            }).setTime(500)
+                            .setEasing(PQ.Easing.linear())
+                            .start();
+                    } else if (loadProgress === 100 && this._totalProgress === 100) {
+                        scope.ready = true;
+                        scope._complete();
+                    }
+
                 }
             }
 
@@ -95,7 +113,12 @@ module.exports = PQ.Class.extend({
     },
 
     _complete: function(){
-        //TODO: Remove tweens
         if(this.callback)this.callback();
+        this.destroy();
+    },
+
+    destroy: function(){
+        this.logoTween.remove();
+        this.barTween.remove();
     }
 });

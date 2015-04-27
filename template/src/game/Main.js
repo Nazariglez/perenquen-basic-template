@@ -1,5 +1,6 @@
 var config = require('../config'),
-    LoadBar = require('./LoadBar');
+    LoadBar = require('./LoadBar'),
+    MainScene = require('./scenes/MainScene');
 
 module.exports = PQ.Class.extend({
     _init: function(){
@@ -23,9 +24,9 @@ module.exports = PQ.Class.extend({
 
 
         loadBar.add([
-            //add your assets here
-
-            {url : "package.json"}
+            //add your assets here to load them
+            //example {name: "logo", url: "logourl.png"}
+            //example {url : "package.json"}
         ]);
 
         loadBar.load(this.onAssetsLoaded.bind(this));
@@ -33,5 +34,8 @@ module.exports = PQ.Class.extend({
 
     onAssetsLoaded: function(){
         console.log('All assets loaded!');
+        var mainScene = new MainScene(this.game);
+        this.game.sceneManager.addScene(mainScene);
+        this.game.sceneManager.setCurrentScene(mainScene);
     }
 });
