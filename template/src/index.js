@@ -1,4 +1,4 @@
-window.PQ = require('perenquenjs');
+//window.PQ = require('perenquenjs');
 
 var config = require('./config'),
     plugin = require('./Plugin'),
