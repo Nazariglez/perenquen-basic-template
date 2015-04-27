@@ -1,11 +1,37 @@
-var config = require('../config');
+var config = require('../config'),
+    LoadBar = require('./LoadBar');
 
 module.exports = PQ.Class.extend({
     _init: function(){
         this.game = new PQ.Game(config);
+        this.game.start();
+        this._loadLogo();
     },
 
-    loadBar: function(){
-        //TODO: Basic load bar, and PQ's load bar
+    _loadLogo: function(){
+        this.game.assetLoader.add([
+            {url: "./assets/images/perenquenjs-logo.png", name: "perenquenjs-logo"}
+        ]).load(this._loadAssets.bind(this));
+    },
+
+    _loadAssets: function(){
+        var loadBar = new LoadBar(this.game, {
+            minTime : 5000,
+            width : 300,
+            height : 50
+        });
+
+
+        loadBar.add([
+            //add your assets here
+
+            //{url : "package.json"}
+        ]);
+
+        loadBar.load(this.onAssetsLoaded.bind(this));
+    },
+
+    onAssetsLoaded: function(){
+        console.log('All assets loaded!');
     }
 });
