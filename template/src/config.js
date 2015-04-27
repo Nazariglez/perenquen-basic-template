@@ -2,7 +2,7 @@ module.exports = {
     //Game's id, uses to save data at localstorage
     id: 'pq.defaultbundle.id',
 
-    //Version of this game, also uses in localstorage metada
+    //Version of this game, also uses in localstorage metadata
     version: "0.0.0",
 
     //Activate debug mode, to show bounds, etc...
@@ -51,7 +51,7 @@ module.exports = {
         usePersitantData: false,
 
         //Screen scale behavior when the canvas size is different to the window size, default GAME_SCALE_TYPE.NONE
-        gameScaleType: PQ.GAME_SCALE_TYPE.NONE,
+        scaleType: PQ.GAME_SCALE_TYPE.NONE,
 
         //If the performance is poor, the time between frames never will go more slowly than this
         minFrameLimit: 30,

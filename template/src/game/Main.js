@@ -3,7 +3,7 @@ var config = require('../config'),
 
 module.exports = PQ.Class.extend({
     _init: function(){
-        this.game = new PQ.Game(config);
+        game = this.game = new PQ.Game(config);
         this.game.start();
         this._loadLogo();
     },
@@ -25,7 +25,7 @@ module.exports = PQ.Class.extend({
         loadBar.add([
             //add your assets here
 
-            //{url : "package.json"}
+            {url : "package.json"}
         ]);
 
         loadBar.load(this.onAssetsLoaded.bind(this));

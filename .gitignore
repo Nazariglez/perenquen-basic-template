@@ -1,5 +1,6 @@
-/node_modules
-/template/node_modeules
+/template/node_modules
 /template/src/libs
 /template/js/perenquen.js
 /template/js/perenquen.dev.js
+/template/js/game.js
+/template/js/game.dev.js
