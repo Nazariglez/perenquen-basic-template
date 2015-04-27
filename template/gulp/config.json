@@ -1,0 +1,9 @@
+{
+  "scripts" : "./src/**/*.js",
+  "entryPoint" : "./src/index.js",
+  "bundleName" : "game",
+  "devSuffix" : ".dev",
+  "bundleDest" : "./js",
+
+  "defaultTask" : ["jshint","build"]
+}
