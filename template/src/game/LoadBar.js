@@ -17,6 +17,10 @@ module.exports = PQ.Class.extend({
         this.ready = false;
 
         this.assetsNum = 0;
+        this.timeForAsset = 0;
+        this.progressForAsset = 0;
+
+        this.count = 0;
     },
 
     add: function(){
@@ -37,7 +41,6 @@ module.exports = PQ.Class.extend({
             .setPosition(this.game.scene.width/2, this.game.scene.height/2)
             .addTo(this.game.scene);
 
-
         //Simple animation
         this.logoTween = logo.tween().to({
             y : logo.y+5
@@ -48,7 +51,10 @@ module.exports = PQ.Class.extend({
             .start();
 
         this.assetsNum = Object.keys(this.loader.resources).length;
+        this.timeForAsset = this.minTime / (this.assetsNum || 1);
+        this.progressForAsset = 100 / (this.assetsNum || 1);
 
+        //Draw loadbar
         this.bar.beginFill(0xb2b2b2, 1)
             .drawRect(0, 0, this.width, this.height)
             .endFill()
@@ -57,55 +63,25 @@ module.exports = PQ.Class.extend({
             .setPosition(this.game.scene.width/2 - this.width/2, this.game.scene.height/2 + 50)
             .addTo(this.game.scene);
 
+        //Add progress animation (linear)
         this.bar._totalProgress = 1;
 
-        var maxProgress = 85;
-
-        var nothingToLoad = !(!!Object.keys(this.loader.resources).length);
-        if(nothingToLoad){
-            maxProgress = 100;
-        }
-
-        //Add progress animation (linear)
         this.barTween = this.bar.tween().to({
-            _totalProgress: maxProgress
-        }).setTime(this.minTime)
-            //.setEasing(PQ.Easing.outSine())
+            _totalProgress: this.progressForAsset
+        }).setTime(this.timeForAsset)
+            .setExpire()
             .start();
 
-        //Fake load bar effect
+        //Re-draw loadbar
         var scope = this;
         this.bar.update = function(gameTime, delta){
             if(scope.ready)return;
 
-            var loadProgress = scope.loader.progress,
-                tweenEnded = scope.barTween.isEnded,
-                progress = (scope.width * this._totalProgress / 100);
+            var progress = (scope.width * this._totalProgress / 100);
 
-            if(tweenEnded){
-                if(nothingToLoad){
-
-                    scope.ready = true;
-                    scope._complete();
-
-                }else {
-
-                    if (loadProgress === 100 && this._totalProgress !== loadProgress) {
-                        scope.barTween.reset()
-                            .from({
-                                _totalProgress: this._totalProgress
-                            })
-                            .to({
-                                _totalProgress: 100
-                            }).setTime(500)
-                            .setEasing(PQ.Easing.linear())
-                            .start();
-                    } else if (loadProgress === 100 && this._totalProgress === 100) {
-                        scope.ready = true;
-                        scope._complete();
-                    }
-
-                }
+            if(scope.count === scope.assetsNum && scope.barTween.isEnded){
+                scope.ready = true;
+                scope._complete();
             }
 
             this.beginFill(0xffffff, 1)
@@ -116,16 +92,27 @@ module.exports = PQ.Class.extend({
     },
 
     _assetLoaded: function(loader, resource){
-          console.log(resource);
+        this.count++;
+        if(this.count < this.assetsNum) {
+
+            if(!this.barTween.isEnded) {
+                this.barTween = this.barTween.chain().to({
+                    _totalProgress: this.progressForAsset * (this.count+1)
+                }).setTime(this.timeForAsset)
+                    .setExpire();
+            }else{
+                this.barTween = this.bar.tween().to({
+                    _totalProgress: this.progressForAsset * (this.count+1)
+                }).setTime(this.timeForAsset)
+                    .setExpire()
+                    .start();
+            }
+
+        }
     },
 
     _complete: function(){
         if(this.callback)this.callback();
-        this.destroy();
-    },
-
-    destroy: function(){
         this.logoTween.remove();
-        this.barTween.remove();
     }
 });

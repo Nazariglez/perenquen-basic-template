@@ -19,7 +19,7 @@ module.exports = PQ.Class.extend({
         var loadBar = new LoadBar(this.game, {
             minTime : 5000,
             width : 300,
-            height : 50
+            height : 40
         });
 
 
