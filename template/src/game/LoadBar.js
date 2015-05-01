@@ -15,6 +15,8 @@ module.exports = PQ.Class.extend({
         this.barTween = null;
 
         this.ready = false;
+
+        this.assetsNum = 0;
     },
 
     add: function(){
@@ -25,6 +27,7 @@ module.exports = PQ.Class.extend({
     load: function(callback){
         this.callback = callback;
         this._showLogo();
+        this.loader.on('load', this._assetLoaded.bind(this));
         this.loader.load();
     },
 
@@ -44,8 +47,13 @@ module.exports = PQ.Class.extend({
             .setTime(1500)
             .start();
 
-        this.bar.lineStyle(3, 0xffffff, 1)
-            .drawRoundedRect(0, 0, this.width, this.height, 10)
+        this.assetsNum = Object.keys(this.loader.resources).length;
+
+        this.bar.beginFill(0xb2b2b2, 1)
+            .drawRect(0, 0, this.width, this.height)
+            .endFill()
+            .lineStyle(3, 0xffffff, 1)
+            .drawRect(0, 0, this.width, this.height)
             .setPosition(this.game.scene.width/2 - this.width/2, this.game.scene.height/2 + 50)
             .addTo(this.game.scene);
 
@@ -74,9 +82,7 @@ module.exports = PQ.Class.extend({
                 tweenEnded = scope.barTween.isEnded,
                 progress = (scope.width * this._totalProgress / 100);
 
-            if(progress < 21){
-                progress = 21;  //Min roundRect = radius*2 +1
-            }else if(tweenEnded){
+            if(tweenEnded){
                 if(nothingToLoad){
 
                     scope.ready = true;
@@ -102,14 +108,15 @@ module.exports = PQ.Class.extend({
                 }
             }
 
-            this.clear()
-                .beginFill(0xffffff, 0.7)
-                .drawRoundedRect(0, 0, progress, scope.height, 10)
-                .endFill()
-                .lineStyle(3, 0xffffff, 1)
-                .drawRoundedRect(0, 0, scope.width, scope.height, 10);
+            this.beginFill(0xffffff, 1)
+                .drawRect(0, 0, progress, scope.height)
+                .endFill();
         };
 
+    },
+
+    _assetLoaded: function(loader, resource){
+          console.log(resource);
     },
 
     _complete: function(){
