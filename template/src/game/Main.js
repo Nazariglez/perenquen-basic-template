@@ -4,7 +4,7 @@ var config = require('../config'),
 
 module.exports = PQ.Class.extend({
     _init: function(){
-        game = this.game = new PQ.Game(config);
+        this.game = new PQ.Game(config);
         this.game.start();
         this._loadLogo();
     },
