@@ -8,7 +8,7 @@ module.exports = PQ.Scene.extend({
    },
 
     showWelcome: function(){
-        var text = new PQ.Text('Your Main Scene...', {
+        var text = new PQ.Text('Hello world!!', {
             font: "30px Arial",
             fill: 0xffffff
         }).setPosition(this.width/2, this.height/2)

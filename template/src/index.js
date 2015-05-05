@@ -4,9 +4,7 @@ var config = require('./config'),
     plugin = require('./Plugin'),
     Main = require('./game/Main');
 
+//Enable all the plugins listed in the config.js
 plugin.enable(config.plugins);
-
-PQ.config.useDeltaAnimation = config.useDeltaAnimation;
-PQ.config.useSortChildrenByDepth = config.useSortChildrenByDepth;
 
 module.exports = new Main();

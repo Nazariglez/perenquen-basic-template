@@ -1,6 +1,11 @@
 var path = "./plugins/";
 
 function Plugin(){
+
+    /**
+     * Require and enable plugins with same name and filename
+     * @param plugins {Array}
+     */
     this.enable = function(plugins){
         if(typeof plugins === "string")plugins = [plugins];
         var len = plugins.length;
@@ -11,6 +16,7 @@ function Plugin(){
 
         PQ.plugin.enable(plugins);
     };
+
 }
 
 module.exports = new Plugin();

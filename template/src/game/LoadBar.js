@@ -3,9 +3,15 @@ module.exports = PQ.Class.extend({
         options = options||{};
 
         this.game = game;
-        this.minTime = options.minTime || 10000;
-        this.width = options.width || 300;
-        this.height = options.height || 40;
+
+        this.minTime = options.minTime || 6000;
+        this.width = options.width || 150;
+        this.height = options.height || 12;
+        this.colorIn = typeof options.colorIn === "number" ? options.colorIn : 0xDBDBDE;
+        this.colorOut = typeof options.colorOut === "number" ? options.colorOut : 0xb2b2b2;
+        this.bgColor = typeof options.backgroundColor === "number" ? options.backgroundColor : 0xffffff;
+
+        this.game.scene.setBackgroundColor(this.bgColor);
 
         this.callback = null;
         this.bar = new PQ.Graphics();
@@ -30,18 +36,20 @@ module.exports = PQ.Class.extend({
 
     load: function(callback){
         this.callback = callback;
-        this._showLogo();
+        this._showLoadBar();
         this.loader.on('load', this._assetLoaded.bind(this));
         this.loader.load();
     },
 
-    _showLogo: function(){
+    _showLoadBar: function(){
+        //Perenquen.js logo
         var logo = new PQ.Sprite('perenquenjs-logo')
             .setAnchor(0.5, 1)
+            .setScale(0.5)
             .setPosition(this.game.scene.width/2, this.game.scene.height/2)
             .addTo(this.game.scene);
 
-        //Simple animation
+        //Simple logo animation
         this.logoTween = logo.tween().to({
             y : logo.y+5
         }).setEasing(PQ.Easing.outSine())
@@ -50,20 +58,21 @@ module.exports = PQ.Class.extend({
             .setTime(1500)
             .start();
 
+        //Basic load data
         this.assetsNum = Object.keys(this.loader.resources).length;
         this.timeForAsset = this.minTime / (this.assetsNum || 1);
         this.progressForAsset = 100 / (this.assetsNum || 1);
 
         //Draw loadbar
-        this.bar.beginFill(0xb2b2b2, 1)
+        this.bar.beginFill(this.colorIn, 1)
             .drawRect(0, 0, this.width, this.height)
             .endFill()
-            .lineStyle(3, 0xffffff, 1)
+            .lineStyle(3, this.colorOut, 1)
             .drawRect(0, 0, this.width, this.height)
-            .setPosition(this.game.scene.width/2 - this.width/2, this.game.scene.height/2 + 50)
+            .setPosition(this.game.scene.width/2 - this.width/2, this.game.scene.height/2 + 20)
             .addTo(this.game.scene);
 
-        //Add progress animation (linear)
+        //Add progress animation (linear) with a tween
         this.bar._totalProgress = 1;
 
         this.barTween = this.bar.tween().to({
@@ -84,7 +93,7 @@ module.exports = PQ.Class.extend({
                 scope._complete();
             }
 
-            this.beginFill(0xffffff, 1)
+            this.beginFill(scope.colorOut, 1)
                 .drawRect(0, 0, progress, scope.height)
                 .endFill();
         };
@@ -92,15 +101,20 @@ module.exports = PQ.Class.extend({
     },
 
     _assetLoaded: function(loader, resource){
+        //Add a new tween for each asset loaded
         this.count++;
         if(this.count < this.assetsNum) {
 
             if(!this.barTween.isEnded) {
+
+                //If barTween still exists, chain it a new tween
                 this.barTween = this.barTween.chain().to({
                     _totalProgress: this.progressForAsset * (this.count+1)
                 }).setTime(this.timeForAsset)
                     .setExpire();
             }else{
+
+                //if barTween is expired, create a new tween
                 this.barTween = this.bar.tween().to({
                     _totalProgress: this.progressForAsset * (this.count+1)
                 }).setTime(this.timeForAsset)
@@ -113,6 +127,8 @@ module.exports = PQ.Class.extend({
 
     _complete: function(){
         if(this.callback)this.callback();
+
+        //Remove the logo's tween (this tween don't stop never, so don't expire never...)
         this.logoTween.remove();
     }
 });

@@ -15,7 +15,7 @@ module.exports = {
     useDeltaAnimation: true,
 
     //Auto sort children when they are added to his parent, (if it's false, you can sort manually with container.sortChildrenById())
-    useSortChildrenByDepth: true,
+    useSortChildrenByDepth: false,
 
     //Game options
     game : {

@@ -17,9 +17,15 @@ module.exports = PQ.Class.extend({
 
     _loadAssets: function(){
         var loadBar = new LoadBar(this.game, {
-            minTime : 5000,
-            width : 300,
-            height : 40
+
+            //Dark style
+            minTime : 6000,
+            width : 150,
+            height : 12,
+            backgroundColor: 0x000000,
+            colorOut: 0xffffff,
+            colorIn: 0xc0c0c0
+
         });
 
 
@@ -34,8 +40,11 @@ module.exports = PQ.Class.extend({
 
     onAssetsLoaded: function(){
         console.log('All assets loaded!');
+        //Create and add a custom scene
         var mainScene = new MainScene(this.game);
         this.game.sceneManager.addScene(mainScene);
+
+        //Render this scene now
         this.game.sceneManager.setCurrentScene(mainScene);
     }
 });
