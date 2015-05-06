@@ -1,6 +1,6 @@
-/template/node_modules
-/template/src/libs
-/template/js/perenquen.js
-/template/js/perenquen.dev.js
-/template/js/game.js
-/template/js/game.dev.js
+/node_modules
+/src/libs
+/js/perenquen.js
+/js/perenquen.dev.js
+/js/game.js
+/js/game.dev.js
