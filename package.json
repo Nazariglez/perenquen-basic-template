@@ -1,6 +1,7 @@
 {
-  "name": "Basic-browserify-temaplte",
+  "name": "perenquen-basic-template",
   "version": "0.0.1",
+  "private": true,
   "devDependencies": {
     "browserify": "^9.0.8",
     "gulp": "^3.8.11",
