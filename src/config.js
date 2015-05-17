@@ -77,13 +77,15 @@ module.exports = {
     //Input interaction options
     input : {
         enableMouse: false,
+        enableMouseInteractivity: false,
+        checkInteractivityFrecuency: 30,
+        mousePreventDefault: true,
+        disableContextMenu: true,
+
         enableKeyboard: false,
         //enableGamepad: false,
-        enableAccelerometer: false,
 
-        mouseCheckFrecuency: 30,
-        disableContextMenu: true,
-        preventDefault: true
+        enableAccelerometer: false
     },
 
     plugins : [
