@@ -70,8 +70,8 @@ module.exports = {
         //Use the WebAudio API always it's available
         useWebAudio: true,
 
-        //Force the loader to load audio files in this order
-        allowedExtensions: ["mp3", "ogg", "wav"]
+        //Force the loader to load audio files in this order if the extension requested is *
+        autoLoadOrder: ["mp3", "ogg", "wav", "m4a"]
     },
 
     //Input interaction options
