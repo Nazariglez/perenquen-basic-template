@@ -15,7 +15,7 @@ module.exports = PQ.Class.extend({
 
         this.callback = null;
         this.bar = new PQ.Graphics();
-        this.loader = new PQ.AssetLoader();
+        this.loader = game.assetLoader;//new PQ.AssetLoader();
 
         this.logoTween = null;
         this.barTween = null;
@@ -126,6 +126,7 @@ module.exports = PQ.Class.extend({
     },
 
     _complete: function(){
+        this.loader.reset();
         if(this.callback)this.callback();
 
         //Remove the logo's tween (this tween don't stop never, so don't expire never...)
