@@ -16,6 +16,7 @@ module.exports = PQ.Class.extend({
     },
 
     _loadAssets: function(){
+        this.game.assetLoader.reset();
         var loadBar = new LoadBar(this.game, {
 
             //Dark style
