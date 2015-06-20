@@ -11,7 +11,7 @@ module.exports = PQ.Class.extend({
 
     _loadLogo: function(){
         this.game.assetLoader.add([
-            {url: "./assets/images/perenquenjs-logo.png", name: "perenquenjs-logo"}
+            {url: "./assets/images/perenquen-logo.png", name: "perenquen-logo"}
         ]).load(this._loadAssets.bind(this));
     },
 

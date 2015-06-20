@@ -3,17 +3,18 @@
   "version": "0.0.1",
   "private": true,
   "devDependencies": {
+    "brfs": "^1.4.0",
     "browserify": "^9.0.8",
     "gulp": "^3.8.11",
     "gulp-cached": "^1.0.4",
     "gulp-jshint": "^1.10.0",
     "gulp-rename": "^1.2.2",
     "gulp-uglify": "^1.2.0",
+    "perenquen": "^0.3.1",
     "require-dir": "^0.3.0",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
-    "watchify": "^3.2.0",
-    "brfs": "^1.4.0"
+    "watchify": "^3.2.0"
   },
   "browserify": {
     "transform": [

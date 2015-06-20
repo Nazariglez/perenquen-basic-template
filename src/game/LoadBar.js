@@ -43,7 +43,7 @@ module.exports = PQ.Class.extend({
 
     _showLoadBar: function(){
         //Perenquen.js logo
-        var logo = new PQ.Sprite('perenquenjs-logo')
+        var logo = new PQ.Sprite('perenquen-logo')
             .setAnchor(0.5, 1)
             .setScale(0.5)
             .setPosition(this.game.scene.width/2, this.game.scene.height/2)
