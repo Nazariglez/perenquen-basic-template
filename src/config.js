@@ -11,9 +11,6 @@ module.exports = {
     //Log out the perenquen's name, version, and web
     sayHello: true,
 
-    //Speed and rotation speed use delta time
-    useDeltaAnimation: true,
-
     //Auto sort children when they are added to his parent, (if it's false, you can sort manually with container.sortChildrenById())
     useSortChildrenByDepth: false,
 
@@ -53,7 +50,7 @@ module.exports = {
         //Screen scale behavior when the canvas size is different to the window size, default GAME_SCALE_TYPE.NONE
         scaleType: PQ.GAME_SCALE_TYPE.NONE,
 
-        //If the performance is poor, the time between frames never will go more slowly than this
+        //If the performance is poor, the time between frames never will go more slowly than this (in frame)
         minFrameLimit: 30,
 
         //Pause the game when it lost the focus, (example: when you change the browser's tab) default true
@@ -83,15 +80,14 @@ module.exports = {
         disableContextMenu: true,
 
         enableKeyboard: false,
-        //enableGamepad: false,
+        enableGamepad: false,
 
         enableAccelerometer: false
     },
 
     plugins : [
         //Here your plugins name
-        //"locale",
-        //"gamepad"
+        //"locale"
     ]
 
 };

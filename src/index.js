@@ -1,4 +1,4 @@
-//window.PQ = require('perenquenjs');
+global.PQ = require('perenquen');
 
 var config = require('./config'),
     plugin = require('./Plugin'),
