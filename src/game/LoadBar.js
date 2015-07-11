@@ -101,6 +101,32 @@ module.exports = PQ.Class.extend({
     },
 
     _assetLoaded: function(loader, resource){
+        //If the asset length change (when you load spritesheet) it's necessary rewrite the tween
+        if(this.assetsNum !== Object.keys(this.loader.resources).length){
+            this.assetsNum = Object.keys(this.loader.resources).length;
+            this.timeForAsset = this.minTime / (this.assetsNum || 1);
+            this.progressForAsset = 100 / (this.assetsNum || 1);
+
+            if(!this.barTween.isEnded) {
+
+                //If barTween still exists rewrite it
+                this.barTween.to({
+                    _totalProgress: this.progressForAsset * (this.count+1)
+                }).setTime(this.timeForAsset)
+                    .setExpire();
+
+            }else{
+
+                //if barTween is expired, create a new tween
+                this.barTween = this.bar.tween().to({
+                    _totalProgress: this.progressForAsset * (this.count+1)
+                }).setTime(this.timeForAsset)
+                    .setExpire()
+                    .start();
+
+            }
+        }
+
         //Add a new tween for each asset loaded
         this.count++;
         if(this.count < this.assetsNum) {
