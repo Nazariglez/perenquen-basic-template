@@ -51,7 +51,7 @@ module.exports = {
         scaleType: PQ.GAME_SCALE_TYPE.NONE,
 
         //If the performance is poor, the time between frames never will go more slowly than this (in frame)
-        minFrameLimit: 30,
+        minFrameLimit: 20, //todo: move up, out of game section, this is more like a system option
 
         //Pause the game when it lost the focus, (example: when you change the browser's tab) default true
         stopAtVisibiltyChange: true,
